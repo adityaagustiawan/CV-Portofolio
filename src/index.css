@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --accent-glow: 217 91% 60%;
+    --terminal-green: 142 71% 45%;
+    --danger-red: 0 84% 60%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --accent-glow: 199 89% 48%;
+    --terminal-green: 142 71% 45%;
+    --danger-red: 0 84% 60%;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px hsl(var(--accent-glow) / 0.5), 0 0 20px hsl(var(--accent-glow) / 0.3);
+  }
+  .border-glow {
+    box-shadow: 0 0 15px hsl(var(--accent-glow) / 0.3);
+  }
+  .bg-glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .animate-glitch {
+    animation: glitch 1s linear infinite;
+  }
+  .animate-scanline {
+    animation: scanline 10s linear infinite;
+  }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.05), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 50;
+}
+
+@layer components {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-zinc-200 dark:bg-zinc-800 rounded-full;
+  }
+  
+  .page {
+    @apply h-full w-full;
+  }
+  
+  .page-content {
+    @apply shadow-inner transition-colors duration-300;
+  }
+  
+  /* Flipbook specific styles */
+  .flip-book-container {
+    perspective: 1500px;
+    transform-style: preserve-3d;
+  }
+
+  .stf__parent {
+    @apply !bg-transparent;
+  }
+
+  .stf__block {
+    @apply !bg-transparent;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased overflow-x-hidden;
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
