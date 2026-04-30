@@ -21,17 +21,37 @@ export default function AIAgentUI() {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [currentIconIndex, setCurrentIconIndex] = useState(0);
+  const [warningLevel, setWarningLevel] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const constraintsRef = useRef(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
+  // Toxic/Prohibited word list
+  const TOXIC_WORDS = ['fuck', 'shit', 'bitch', 'asshole', 'idiot', 'stupid', 'dumb', 'hate', 'kill', 'die', 'threat', 'scam', 'hack'];
+  const SENSITIVE_WORDS = ['salary', 'address', 'phone', 'password', 'private', 'religion', 'politics', 'money'];
+
   // Icon cycling animation for the bubble
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIconIndex((prev) => (prev + 1) % AI_ICONS.length);
+      // If warning level is high, use more aggressive icons
+      if (warningLevel > 0) {
+        setCurrentIconIndex(Math.random() > 0.5 ? 4 : 5); // Activity or Cpu (flashing red vibe)
+      } else {
+        setCurrentIconIndex((prev) => (prev + 1) % AI_ICONS.length);
+      }
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [warningLevel]);
+
+  // Handle Site Closure
+  useEffect(() => {
+    if (warningLevel >= 3) {
+      speak("CRITICAL SECURITY BREACH: TERMINATING SESSION IMMEDIATELY.");
+      setTimeout(() => {
+        window.location.href = "about:blank"; // Close/Clear the site
+      }, 2000);
+    }
+  }, [warningLevel]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -43,16 +63,14 @@ export default function AIAgentUI() {
   const speak = (text: string) => {
     if (isMuted || !window.speechSynthesis) return;
 
-    // Cancel any current speech
     window.speechSynthesis.cancel();
 
-    const cleanText = text.replace(/SYSTEM_SPECS:|PROJECT_LOG:|COMM_CHANNEL:|DOC_QUERY:|ANALYSIS:|LOG:|OUT_OF_BOUNDS:|QUERY_UNRECOGNIZED:|SYSTEM INITIALIZED:|ACCESS_DENIED:/g, '').trim();
+    const cleanText = text.replace(/SYSTEM_SPECS:|PROJECT_LOG:|COMM_CHANNEL:|DOC_QUERY:|ANALYSIS:|LOG:|OUT_OF_BOUNDS:|QUERY_UNRECOGNIZED:|SYSTEM INITIALIZED:|ACCESS_DENIED:|CRITICAL:|WARNING:|THREAT_DETECTED:/g, '').trim();
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 1.1;
-    utterance.pitch = 1.0;
+    utterance.rate = warningLevel > 0 ? 1.4 : 1.1; // Speak faster if angry
+    utterance.pitch = warningLevel > 0 ? 0.8 : 1.0; // Deeper voice if angry
     
-    // Try to find a nice neural-sounding voice if available
     const voices = window.speechSynthesis.getVoices();
     const preferredVoice = voices.find(v => v.name.includes('Google') || v.name.includes('Neural')) || voices[0];
     if (preferredVoice) utterance.voice = preferredVoice;
@@ -86,10 +104,18 @@ export default function AIAgentUI() {
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const dateString = now.toLocaleDateString();
+
+    // Check for toxicity
+    if (TOXIC_WORDS.some(word => q.includes(word))) {
+      setWarningLevel(prev => prev + 1);
+      const level = warningLevel + 1;
+      if (level === 1) return "WARNING: Verbal toxicity detected. Please maintain professional communication protocols.";
+      if (level === 2) return "THREAT_DETECTED: Final warning. Further inappropriate input will result in immediate system termination.";
+      return "CRITICAL: SECURITY PROTOCOL ACTIVATED. GOODBYE.";
+    }
     
     // Check for sensitive or out-of-context topics
-    const sensitiveWords = ['salary', 'address', 'phone', 'password', 'private', 'religion', 'politics'];
-    if (sensitiveWords.some(word => q.includes(word))) {
+    if (SENSITIVE_WORDS.some(word => q.includes(word))) {
       return "ACCESS_DENIED: The requested information is sensitive or outside professional parameters. Please contact Adytia directly for private inquiries.";
     }
 
@@ -104,6 +130,16 @@ export default function AIAgentUI() {
 
     if (q.includes('status') || q.includes('health')) {
       return "ANALYSIS: System status is nominal. Neural background layers are at 98% efficiency. Adytia's portfolio data is fully indexed and ready for retrieval.";
+    }
+
+    // Smart Out-of-Context Handling (Realtime-ish)
+    if (q.includes('weather') || q.includes('food') || q.includes('movie') || q.includes('sport') || q.includes('game') && !q.includes('dev')) {
+      const responses = [
+        "LOG: Data outside professional registry. However, system suggests checking a local weather API for accuracy.",
+        "ANALYSIS: Non-professional query identified. I am optimized for technical portfolio data, not general lifestyle trivia.",
+        "OUT_OF_BOUNDS: Please redirect queries to Adytia's AI architecture or software projects."
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
     }
 
     // Context-aware responses
@@ -129,17 +165,12 @@ export default function AIAgentUI() {
       return "DOC_QUERY: Full resume available in the Resume section. Expertise focus: RAG, LLM Evaluation, and Agentic Workflows.";
     }
 
-    // Handle generic praise or out-of-context opinions about the CV itself
+    // Handle generic praise
     if (q.includes('good') || q.includes('great') || q.includes('nice') || q.includes('job') || q.includes('perfect') || q.includes('quality') || q.includes('impressive')) {
         if (q.includes('cv') || q.includes('resume') || q.includes('portfolio')) {
             return "ANALYSIS: Portfolio quality verified. Architecture optimized for AI Engineering roles with emphasis on RAG and MLOps reliability.";
         }
         return "LOG: Positive feedback acknowledged. System integrity remains optimal.";
-    }
-
-    // Handle out-of-context topics that aren't about the CV
-    if (q.includes('weather') || q.includes('food') || q.includes('sport') || q.includes('movie') || q.includes('game') && !q.includes('dev')) {
-        return "OUT_OF_BOUNDS: Topic exceeds professional scope. Please focus queries on Adytia's technical background or portfolio data.";
     }
 
     // Default response for out-of-context queries
@@ -168,23 +199,40 @@ export default function AIAgentUI() {
               scale: 1,
               y: 0,
               height: isMinimized ? '48px' : '400px',
-              width: '320px'
+              width: '320px',
+              borderColor: warningLevel > 0 ? 'rgba(239, 68, 68, 0.5)' : 'rgba(255, 255, 255, 0.1)'
             }}
             exit={{ opacity: 0, scale: 0.5, y: 100 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="absolute bottom-6 left-6 bg-zinc-950/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col pointer-events-auto cursor-grab active:cursor-grabbing"
+            className={cn(
+              "absolute bottom-6 left-6 bg-zinc-950/80 backdrop-blur-xl border rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col pointer-events-auto cursor-grab active:cursor-grabbing",
+              warningLevel > 0 && "animate-shake shadow-[0_0_50px_rgba(239,68,68,0.3)]"
+            )}
             style={{ x: 0, y: 0 }}
           >
             {/* Header / Drag Handle */}
-            <div className="px-4 py-3 bg-white/5 border-b border-white/10 flex items-center justify-between cursor-move">
+            <div className={cn(
+              "px-4 py-3 border-b flex items-center justify-between cursor-move transition-colors",
+              warningLevel > 0 ? "bg-red-500/10 border-red-500/20" : "bg-white/5 border-white/10"
+            )}>
               <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-blue-400" />
+                <Terminal className={cn("w-4 h-4", warningLevel > 0 ? "text-red-500" : "text-blue-400")} />
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 leading-none">Agent_Copilot_v1.5</span>
+                  <span className={cn(
+                    "text-[10px] font-bold uppercase tracking-[0.2em] leading-none",
+                    warningLevel > 0 ? "text-red-500" : "text-white/70"
+                  )}>
+                    {warningLevel > 0 ? `DEFENSE_MODE_v${warningLevel}.0` : "Agent_Copilot_v1.5"}
+                  </span>
                   {isSpeaking && (
                     <div className="flex items-center gap-1 mt-0.5">
-                      <Radio className="w-2 h-2 text-green-500 animate-pulse" />
-                      <span className="text-[7px] font-bold uppercase text-green-500/80 tracking-widest">TRANSMITTING...</span>
+                      <Radio className={cn("w-2 h-2 animate-pulse", warningLevel > 0 ? "text-red-500" : "text-green-500")} />
+                      <span className={cn(
+                        "text-[7px] font-bold uppercase tracking-widest",
+                        warningLevel > 0 ? "text-red-500" : "text-green-500/80"
+                      )}>
+                        {warningLevel > 0 ? "THREAT_ANALYSIS..." : "TRANSMITTING..."}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -225,14 +273,23 @@ export default function AIAgentUI() {
                       className="flex flex-col items-start"
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        {msg.role === 'assistant' ? <Cpu className="w-3 h-3 text-blue-500" /> : <User className="w-3 h-3 text-zinc-500" />}
-                        <span className="text-[8px] uppercase tracking-widest text-white/30">{msg.role === 'assistant' ? 'AI_SYSTEM' : 'USER'}</span>
+                        {msg.role === 'assistant' ? (
+                          <Cpu className={cn("w-3 h-3", warningLevel > 0 ? "text-red-500" : "text-blue-500")} />
+                        ) : (
+                          <User className="w-3 h-3 text-zinc-500" />
+                        )}
+                        <span className="text-[8px] uppercase tracking-widest text-white/30">
+                          {msg.role === 'assistant' ? (warningLevel > 0 ? 'DEFENSE_SYS' : 'AI_SYSTEM') : 'USER'}
+                        </span>
                       </div>
-                      <div className={`p-3 rounded-xl text-[11px] leading-relaxed w-full ${
+                      <div className={cn(
+                        "p-3 rounded-xl text-[11px] leading-relaxed w-full border shadow-inner",
                         msg.role === 'user' 
-                          ? 'bg-blue-600/10 text-blue-100 border border-blue-500/20' 
-                          : 'bg-white/5 text-zinc-400 border border-white/5 shadow-inner'
-                      }`}>
+                          ? 'bg-blue-600/10 text-blue-100 border-blue-500/20' 
+                          : warningLevel > 0 
+                            ? 'bg-red-500/10 text-red-100 border-red-500/20'
+                            : 'bg-white/5 text-zinc-400 border-white/5'
+                      )}>
                         {msg.content}
                       </div>
                     </div>
