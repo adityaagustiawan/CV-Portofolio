@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, X, Bot, User, Minimize2, Maximize2, Terminal, Cpu, Sparkles, Brain, Zap, Activity, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Send, X, Bot, User, Minimize2, Maximize2, Terminal, Cpu, Sparkles, Brain, Zap, Activity, Volume2, VolumeX, Radio, Github as GithubIcon, History, FolderGit2 } from 'lucide-react';
 import { site } from '@/data/site';
+import { cn } from '@/lib/utils';
+import { Octokit } from 'octokit';
+
+const octokit = new Octokit({
+  auth: import.meta.env.VITE_GITHUB_PAT
+});
 
 type Message = {
   role: 'user' | 'assistant';
@@ -65,7 +71,7 @@ export default function AIAgentUI() {
 
     window.speechSynthesis.cancel();
 
-    const cleanText = text.replace(/SYSTEM_SPECS:|PROJECT_LOG:|COMM_CHANNEL:|DOC_QUERY:|ANALYSIS:|LOG:|OUT_OF_BOUNDS:|QUERY_UNRECOGNIZED:|SYSTEM INITIALIZED:|ACCESS_DENIED:|CRITICAL:|WARNING:|THREAT_DETECTED:/g, '').trim();
+    const cleanText = text.replace(/SYSTEM_SPECS:|PROJECT_LOG:|COMM_CHANNEL:|DOC_QUERY:|ANALYSIS:|LOG:|OUT_OF_BOUNDS:|QUERY_UNRECOGNIZED:|SYSTEM INITIALIZED:|ACCESS_DENIED:|CRITICAL:|WARNING:|THREAT_DETECTED:|GITHUB_INTEGRATION:|GITHUB_ERROR:/g, '').trim();
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.rate = warningLevel > 0 ? 1.4 : 1.1; // Speak faster if angry
@@ -91,27 +97,57 @@ export default function AIAgentUI() {
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsTyping(true);
 
-    setTimeout(() => {
-      const response = generateResponse(userMessage);
+    try {
+      const response = await generateResponse(userMessage);
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
       setIsTyping(false);
       speak(response);
-    }, 1000);
+    } catch (error) {
+      console.error('AI Error:', error);
+      const errorMsg = "ERROR: Failed to process neural query. Please check network connection.";
+      setMessages(prev => [...prev, { role: 'assistant', content: errorMsg }]);
+      setIsTyping(false);
+      speak(errorMsg);
+    }
   };
 
-  const generateResponse = (query: string): string => {
+  const generateResponse = async (query: string): Promise<string> => {
     const q = query.toLowerCase();
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const dateString = now.toLocaleDateString();
 
-    // Check for toxicity
+    // Toxicity check (Sync)
     if (TOXIC_WORDS.some(word => q.includes(word))) {
       setWarningLevel(prev => prev + 1);
       const level = warningLevel + 1;
       if (level === 1) return "WARNING: Verbal toxicity detected. Please maintain professional communication protocols.";
       if (level === 2) return "THREAT_DETECTED: Final warning. Further inappropriate input will result in immediate system termination.";
       return "CRITICAL: SECURITY PROTOCOL ACTIVATED. GOODBYE.";
+    }
+
+    // GitHub MCP-like Live Queries
+    if (q.includes('github') || q.includes('repo') || q.includes('commit')) {
+      try {
+        if (q.includes('repo') || q.includes('project')) {
+          const { data: repos } = await octokit.rest.repos.listForAuthenticatedUser({ sort: 'updated', per_page: 5 });
+          const repoList = repos.map(r => r.name).join(', ');
+          return `GITHUB_INTEGRATION: Found ${repos.length} active repositories. Latest: ${repoList}. Current project is "CV-Portofolio".`;
+        }
+        if (q.includes('commit') || q.includes('update')) {
+          const { data: commits } = await octokit.rest.repos.listCommits({
+            owner: 'adityaagustiawan',
+            repo: 'CV-Portofolio',
+            per_page: 3
+          });
+          const commitLogs = commits.map(c => c.commit.message).join(' | ');
+          return `GITHUB_INTEGRATION: Recent commits on CV-Portofolio: ${commitLogs}. Systems are up to date.`;
+        }
+        const { data: user } = await octokit.rest.users.getAuthenticated();
+        return `GITHUB_INTEGRATION: Authenticated as ${user.login}. Profile bio: "${user.bio}". Public repositories: ${user.public_repos}.`;
+      } catch (err) {
+        return "GITHUB_ERROR: Unable to synchronize with GitHub API. Access token may be invalid or rate-limited.";
+      }
     }
     
     // Check for sensitive or out-of-context topics
