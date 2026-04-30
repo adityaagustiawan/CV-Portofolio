@@ -55,7 +55,7 @@ export default function AIAgentUI() {
     
     if (q.includes('project') || q.includes('work')) {
       const projects = site.projects.map(p => p.title).join(', ');
-      return `PROJECT_LOG: Active projects identified: ${projects}. You can explore technical details within the pages of this flipbook.`;
+      return `PROJECT_LOG: Active projects identified: ${projects}. You can explore them in the Projects section.`;
     }
 
     if (q.includes('skill') || q.includes('tech') || q.includes('stack')) {
@@ -68,7 +68,7 @@ export default function AIAgentUI() {
     }
 
     if (q.includes('cv') || q.includes('resume')) {
-      return "DOC_QUERY: Full resume available in Section 05. Expertise focus: RAG, LLM Evaluation, and Agentic Workflows.";
+      return "DOC_QUERY: Full resume available in the Resume section. Expertise focus: RAG, LLM Evaluation, and Agentic Workflows.";
     }
 
     // Handle generic praise or out-of-context opinions about the CV itself

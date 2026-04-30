@@ -4,6 +4,7 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 import IntroOverlay from "@/components/intro/IntroOverlay";
 import GameBackground from "@/components/layout/GameBackground";
 import VideoBackground from "@/components/layout/VideoBackground";
+import AIAgentUI from "@/components/ui/AIAgentUI";
 import { Outlet } from "react-router-dom";
 
 export default function SiteLayout() {
@@ -17,6 +18,7 @@ export default function SiteLayout() {
       <main className="relative">
         <Outlet />
       </main>
+      <AIAgentUI />
       <SiteFooter />
     </div>
   );
