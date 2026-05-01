@@ -121,7 +121,7 @@ export const site: SiteConfig = {
     "Languages": ["JavaScript", "TypeScript", "Python", "PHP", "SQL"],
     "Frontend": ["React", "Next.js", "TanStack", "Tailwind CSS", "Three.js", "Framer Motion"],
     "Backend": ["Node.js", "Express", "REST APIs", "Supabase", "PostgreSQL"],
-    "AI & Tools": ["OpenAI API", "Chatbots", "Automation", "Git", "Vercel", "Docker"],
+    "AI & Tools": ["OpenAI API", "Chatbots", "Machine Learning Operations/MLOps", "Automation", "Git", "Vercel", "Docker"],
   } as const,
   about: {
     short:

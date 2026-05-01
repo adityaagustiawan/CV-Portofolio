@@ -23,19 +23,35 @@
 @layer utilities {
   .text-glow {
     text-shadow: 0 0 10px hsl(var(--accent-glow) / 0.5), 0 0 20px hsl(var(--accent-glow) / 0.3);
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .border-glow {
     box-shadow: 0 0 15px hsl(var(--accent-glow) / 0.3);
+    transform: translateZ(0);
   }
   .bg-glass {
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    transform: translateZ(0);
   }
   .animate-glitch {
     animation: glitch 1s linear infinite;
+    will-change: transform;
   }
   .animate-scanline {
     animation: scanline 10s linear infinite;
+    will-change: transform;
   }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+canvas {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes glitch {

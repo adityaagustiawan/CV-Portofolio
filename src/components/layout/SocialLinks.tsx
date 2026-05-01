@@ -26,7 +26,7 @@ export default function SocialLinks({
             className={cn(
               "group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-black/10 bg-black/5 px-3 text-sm text-zinc-900 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 dark:border-white/10 dark:bg-white/5 dark:text-white/90",
               "hover:bg-black/10 dark:hover:bg-white/10",
-              "will-change-transform",
+              "will-change-transform pointer-events-auto",
               size === "sm" ? "h-9" : "h-10",
               iconOnly && "w-10 justify-center px-0"
             )}
@@ -34,6 +34,7 @@ export default function SocialLinks({
             title={link.label}
             style={{ transform: "translate3d(var(--tx, 0px), var(--ty, 0px), 0)" } as CSSProperties}
             onPointerMove={(e) => {
+              if (window.matchMedia("(pointer: coarse)").matches) return;
               const el = e.currentTarget;
               const rect = el.getBoundingClientRect();
               const x = e.clientX - rect.left;
@@ -46,6 +47,7 @@ export default function SocialLinks({
               el.style.setProperty("--ty", `${dy * 0.06}px`);
             }}
             onPointerLeave={(e) => {
+              if (window.matchMedia("(pointer: coarse)").matches) return;
               const el = e.currentTarget;
               el.style.setProperty("--tx", "0px");
               el.style.setProperty("--ty", "0px");

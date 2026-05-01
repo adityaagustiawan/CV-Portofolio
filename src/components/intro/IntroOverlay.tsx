@@ -128,11 +128,11 @@ export default function IntroOverlay() {
                       <span className="h-1.5 w-1.5 rounded-full bg-blue-400/80" />
                       Welcome
                     </div>
-                    <div className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">
-                      {site.name}
-                      <span className="block text-white/70">{site.role}</span>
+                    <div className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl pointer-events-auto select-none transform-gpu will-change-transform">
+                      <span className="block text-white group-hover:text-blue-400 transition-colors duration-300">{site.name}</span>
+                      <span className="block text-white/70 mt-1">{site.role}</span>
                     </div>
-                    <div className="mt-3 max-w-xl text-sm leading-6 text-white/70">{site.tagline}</div>
+                    <div className="mt-3 max-w-xl text-sm leading-6 text-white/70 pointer-events-auto select-none transform-gpu">{site.tagline}</div>
                   </div>
 
                   <Button

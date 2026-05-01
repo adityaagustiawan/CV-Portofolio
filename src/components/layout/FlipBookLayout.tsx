@@ -187,13 +187,13 @@ export default function FlipBookLayout() {
       <IntroOverlay />
       
       {/* Header / Nav */}
-      <header className="fixed top-0 left-0 right-0 z-[60] px-6 py-4 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-[60] px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-zinc-950/20 backdrop-blur-md">
         <div className="flex flex-col">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-1 h-4 bg-blue-500" />
-            <span className="text-xl font-black tracking-tighter text-white uppercase">{site.name}</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+            <div className="w-0.5 sm:w-1 h-3 sm:h-4 bg-blue-500" />
+            <span className="text-lg sm:text-xl font-black tracking-tighter text-white uppercase">{site.name}</span>
           </div>
-          <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-blue-500/80 ml-3">Portfolio · 2026</span>
+          <span className="text-[7px] sm:text-[9px] font-bold uppercase tracking-[0.3em] sm:tracking-[0.4em] text-blue-500/80 ml-2 sm:ml-3">Portfolio · 2026</span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -223,7 +223,7 @@ export default function FlipBookLayout() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-[55] bg-zinc-950/90 backdrop-blur-xl flex items-center justify-center p-8"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-5xl w-full">
               {pages.slice(2, -1).map((page, i) => (
                 <button
                   key={i}
@@ -231,14 +231,14 @@ export default function FlipBookLayout() {
                     bookRef.current?.pageFlip().turnToPage(i + 2);
                     setIsNavOpen(false);
                   }}
-                  className="group relative p-6 rounded-2xl border border-white/5 bg-white/5 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all text-left"
+                  className="group relative p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all text-left"
                 >
-                  <span className="block text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">0{i + 1}</span>
-                  <span className="block text-lg font-bold text-white group-hover:text-blue-400 transition-colors uppercase tracking-tight">
+                  <span className="block text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1 sm:mb-2">0{i + 1}</span>
+                  <span className="block text-sm sm:text-lg font-bold text-white group-hover:text-blue-400 transition-colors uppercase tracking-tight line-clamp-1 sm:line-clamp-none">
                     {page.title === 'Project' ? page.data?.title : page.title}
                   </span>
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ChevronRight className="w-5 h-5 text-blue-500" />
+                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ChevronRight className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500" />
                   </div>
                 </button>
               ))}

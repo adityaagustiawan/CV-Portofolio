@@ -133,13 +133,15 @@ function makeWindows11Texture(tools: ToolSpec[], selectedId: string, lite: boole
   const canvas = document.createElement("canvas");
   canvas.width = 1024;
   canvas.height = 576;
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { alpha: false });
   if (!ctx) return null;
 
   const selected = tools.find((t) => t.id === selectedId) ?? tools[0];
   const tabs = lite ? ["rag", "llm", "eval", "trae"] : ["rag", "llm", "eval", "trae", "vector", "python", "ts", "docker"];
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Background
+  ctx.fillStyle = "#05060a";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   const wallpaper = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
   wallpaper.addColorStop(0, "#0b1630");
@@ -427,16 +429,16 @@ export default function WorkstationScene({
 
     if (r) {
       if (variant === "hero" && interactive) {
-        // Automatic rotation for the workstation
-        r.rotation.y += dt * 0.15; // Speed of automatic rotation
-        r.rotation.x = Math.sin(t * 0.35) * 0.05;
-        r.position.y = Math.sin(t * 0.6) * 0.03;
+        // Smoothly rotate the workstation automatically
+        r.rotation.y = MathUtils.lerp(r.rotation.y, r.rotation.y + dt * 0.15, 0.1);
+        r.rotation.x = MathUtils.lerp(r.rotation.x, Math.sin(t * 0.35) * 0.05, 0.05);
+        r.position.y = MathUtils.lerp(r.position.y, Math.sin(t * 0.6) * 0.03, 0.05);
       } else {
         const px = state.pointer.x;
         const py = state.pointer.y;
-        r.rotation.y = MathUtils.damp(r.rotation.y, px * 0.45, 6, dt) + dt * 0.12;
-        r.rotation.x = MathUtils.damp(r.rotation.x, -py * 0.18, 6, dt);
-        r.position.y = Math.sin(t * 0.6) * 0.02;
+        r.rotation.y = MathUtils.damp(r.rotation.y, px * 0.45, 4, dt) + dt * 0.12;
+        r.rotation.x = MathUtils.damp(r.rotation.x, -py * 0.18, 4, dt);
+        r.position.y = MathUtils.lerp(r.position.y, Math.sin(t * 0.6) * 0.02, 0.05);
       }
     }
 
@@ -463,7 +465,7 @@ export default function WorkstationScene({
           makeDefault
           enablePan={false}
           enableZoom={true}
-          enableRotate={true}
+          enableRotate={!lite}
           enableDamping={true}
           dampingFactor={0.08}
           rotateSpeed={0.7}

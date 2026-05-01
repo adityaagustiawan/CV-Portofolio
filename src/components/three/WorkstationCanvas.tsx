@@ -103,7 +103,16 @@ export default function WorkstationCanvas({
           camera={camera}
           dpr={dpr}
           frameloop={reducedMotion ? "demand" : "always"}
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+          performance={{ min: 0.5 }}
+          gl={{ 
+            antialias: true, 
+            alpha: true, 
+            powerPreference: "high-performance",
+            stencil: false,
+            depth: true,
+            preserveDrawingBuffer: false
+          }}
+          shadows={false}
           style={{ touchAction: "none" }}
           onCreated={({ gl }) => {
             const el = gl.domElement;

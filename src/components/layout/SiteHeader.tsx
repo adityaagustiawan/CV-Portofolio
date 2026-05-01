@@ -22,19 +22,19 @@ export default function SiteHeader() {
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="group flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-bold tracking-[0.2em] text-white focus-visible:outline-none"
+            className="group flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-bold tracking-[0.2em] text-white focus-visible:outline-none pointer-events-auto"
             aria-label="Go to Home"
             onClick={() => setOpen(false)}
           >
-            <div className="relative h-9 w-9 overflow-hidden rounded-lg bg-blue-500/20 ring-1 ring-blue-500/30 group-hover:ring-blue-400 transition-all duration-300">
+            <div className="relative h-9 w-9 overflow-hidden rounded-lg bg-blue-500/20 ring-1 ring-blue-500/30 group-hover:ring-blue-400 transition-all duration-300 isolate">
               <img 
                 src="/profile.svg" 
                 alt={site.name}
-                className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity transform-gpu"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent pointer-events-none" />
             </div>
-            <span className="hidden sm:inline uppercase text-glow">{site.name}</span>
+            <span className="hidden sm:inline uppercase text-glow will-change-[text-shadow]">{site.name}</span>
           </Link>
 
           <nav className="hidden items-center gap-4 md:flex" aria-label="Primary navigation">
