@@ -69,6 +69,8 @@ export type SiteConfig = {
   tagline: string;
   location: string;
   email: string;
+  resumeUrl: string;
+  portfolioUrl: string;
   resumeCtaLabel: string;
   socials: SocialLink[];
   nav: NavItem[];
@@ -93,9 +95,11 @@ export const site: SiteConfig = {
   tagline: "Building AI-powered applications, automation tools, and engaging web experiences.",
   location: "Bandung, Indonesia",
   email: "adityaagustiawan562@gmail.com",
+  resumeUrl: "/CV_Adytia_Agustiawan.pdf",
+  portfolioUrl: "/Portfolio_Adytia_Agustiawan.pdf",
   resumeCtaLabel: "Print PDF",
   socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/adytia-agustiawan-3a3345376/", icon: Linkedin },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/adytia-agustiawan-3a3345376/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BoAZojSLHT%2BmqdlbAH%2Bk%2B7Q%3D%3D", icon: Linkedin },
     { label: "Email", href: "mailto:adityaagustiawan562@gmail.com", icon: Mail },
     { label: "GitHub", href: "https://github.com/adityaagustiawan", icon: Github },
     { label: "Twitter", href: "https://twitter.com/adytia-agustiawan", icon: Twitter },

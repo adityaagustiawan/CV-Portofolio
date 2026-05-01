@@ -35,13 +35,13 @@ export default function Resume() {
       </div>
 
       <div className="no-print mt-7 flex flex-wrap gap-3">
-        <a href="/CV_Adytia_Agustiawan.pdf" download="CV_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
+        <a href={site.resumeUrl} download="CV_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
           <Button type="button">
             <Printer className="h-4 w-4" />
             {site.resumeCtaLabel}
           </Button>
         </a>
-        <a href="/Portfolio_Adytia_Agustiawan.pdf" download="Portfolio_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
+        <a href={site.portfolioUrl} download="Portfolio_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
           <Button type="button" variant="secondary">
             <FileDown className="h-4 w-4" />
             Download Portfolio
