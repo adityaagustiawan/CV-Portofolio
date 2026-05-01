@@ -81,6 +81,7 @@ export type SiteConfig = {
 };
 
 export const site: SiteConfig = {
+  // Last updated: 2026-05-01
   name: "ADYTIA AGUSTIAWAN",
   role: "Full-Stack Developer | AI & Automation Enthusiast",
   roles: [
