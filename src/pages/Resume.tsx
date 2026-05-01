@@ -35,14 +35,16 @@ export default function Resume() {
       </div>
 
       <div className="no-print mt-7 flex flex-wrap gap-3">
-        <Button type="button" onClick={() => window.print()}>
-          <Printer className="h-4 w-4" />
-          {site.resumeCtaLabel}
-        </Button>
-        <a href="/resume.pdf" className="hidden" aria-hidden>
+        <a href="/CV_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
+          <Button type="button">
+            <Printer className="h-4 w-4" />
+            {site.resumeCtaLabel}
+          </Button>
+        </a>
+        <a href="/Portfolio_Adytia_Agustiawan.pdf" target="_blank" rel="noopener noreferrer">
           <Button type="button" variant="secondary">
             <FileDown className="h-4 w-4" />
-            Download PDF
+            Download Portfolio
           </Button>
         </a>
       </div>
