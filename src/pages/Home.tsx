@@ -7,13 +7,12 @@ import AnimatedName from "@/components/hero/AnimatedName";
 import TypewriterRole from "@/components/hero/TypewriterRole";
 import { site } from "@/data/site";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, FileText, Mail, Monitor, Activity, Cpu, Database, Terminal, Shield, Zap, Layout, Globe } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { motion, useTransform, useSpring } from "framer-motion";
+import { ArrowRight, Mail, Monitor, Activity, Cpu, Database, Terminal, Shield, Zap, Layout } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Home() {
-  const navigate = useNavigate();
   const reducedMotion = usePrefersReducedMotion();
   const [view, setView] = useState<"overview" | "screen">("overview");
   const [tool, setTool] = useState<string>("rag");
@@ -21,18 +20,25 @@ export default function Home() {
   
   const mouseX = useSpring(0, { stiffness: 50, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 50, damping: 20 });
+  const rotateX = useTransform(mouseY, [-20, 20], [5, -5]);
+  const rotateY = useTransform(mouseX, [-20, 20], [-5, 5]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
-    mouseX.set((clientX / innerWidth - 0.5) * 20);
-    mouseY.set((clientY / innerHeight - 0.5) * 20);
+    mouseX.set((clientX / innerWidth - 0.5) * 40);
+    mouseY.set((clientY / innerHeight - 0.5) * 40);
   };
 
   return (
-    <div 
+    <motion.div 
       className="relative min-h-screen overflow-x-hidden"
       onMouseMove={handleMouseMove}
+      style={{
+        rotateX,
+        rotateY,
+        perspective: "1200px"
+      }}
     >
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -277,7 +283,7 @@ export default function Home() {
           </motion.div>
         </Container>
       </section>
-    </div>
+    </motion.div>
   );
 }
 

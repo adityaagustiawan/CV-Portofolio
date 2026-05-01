@@ -427,13 +427,14 @@ export default function WorkstationScene({
 
     if (r) {
       if (variant === "hero" && interactive) {
-        r.rotation.y += dt * 0.04;
-        r.rotation.x = Math.sin(t * 0.35) * 0.03;
-        r.position.y = Math.sin(t * 0.6) * 0.02;
+        // Automatic rotation for the workstation
+        r.rotation.y += dt * 0.15; // Speed of automatic rotation
+        r.rotation.x = Math.sin(t * 0.35) * 0.05;
+        r.position.y = Math.sin(t * 0.6) * 0.03;
       } else {
         const px = state.pointer.x;
         const py = state.pointer.y;
-        r.rotation.y = MathUtils.damp(r.rotation.y, px * 0.45, 6, dt) + dt * 0.08;
+        r.rotation.y = MathUtils.damp(r.rotation.y, px * 0.45, 6, dt) + dt * 0.12;
         r.rotation.x = MathUtils.damp(r.rotation.x, -py * 0.18, 6, dt);
         r.position.y = Math.sin(t * 0.6) * 0.02;
       }
