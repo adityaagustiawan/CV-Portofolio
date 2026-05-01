@@ -88,7 +88,7 @@ export default function Resume() {
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <div className="text-sm font-semibold">Contact</div>
             <div className="mt-2 text-sm text-white/70">{site.email}</div>
-            <div className="mt-4 text-xs text-white/50">Tip: use “Print / Save PDF” to export.</div>
+            <div className="mt-4 text-xs text-white/50">Tip: use “Print PDF” to export.</div>
           </div>
         </div>
       </div>

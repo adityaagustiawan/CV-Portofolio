@@ -92,7 +92,7 @@ export const site: SiteConfig = {
   tagline: "Building AI-powered applications, automation tools, and engaging web experiences.",
   location: "Bandung, Indonesia",
   email: "adityaagustiawan562@gmail.com",
-  resumeCtaLabel: "Print / Save PDF",
+  resumeCtaLabel: "Print PDF",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/adytia-agustiawan-3a3345376/", icon: Linkedin },
     { label: "Email", href: "mailto:adityaagustiawan562@gmail.com", icon: Mail },
