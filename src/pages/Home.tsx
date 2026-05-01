@@ -72,14 +72,14 @@ export default function Home() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="pointer-events-auto"
+              className="pointer-events-none"
             >
-              <div className="inline-flex items-center gap-3 rounded-sm border-l-2 border-blue-500 bg-blue-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 backdrop-blur-md">
+              <div className="inline-flex items-center gap-3 rounded-sm border-l-2 border-blue-500 bg-blue-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 backdrop-blur-md pointer-events-auto w-fit">
                 <Activity className="h-3 w-3 animate-pulse" />
                 Operational Status: Active
               </div>
 
-              <h1 className="mt-8 text-5xl font-black tracking-tighter sm:text-7xl lg:text-8xl">
+              <h1 className="mt-8 text-5xl font-black tracking-tighter sm:text-7xl lg:text-8xl pointer-events-auto">
                 <div className="text-white opacity-20 text-sm tracking-[0.5em] font-bold uppercase mb-2">Subject Name</div>
                 <div className="text-glow">
                   <AnimatedName value={site.name} reducedMotion={reducedMotion} />
@@ -89,13 +89,13 @@ export default function Home() {
                 </div>
               </h1>
 
-              <div className="mt-8 p-6 rounded-lg bg-zinc-900/40 border border-white/5 backdrop-blur-xl max-w-xl">
+              <div className="mt-8 p-6 rounded-lg bg-zinc-900/40 border border-white/5 backdrop-blur-xl max-w-xl pointer-events-auto">
                 <p className="text-lg leading-relaxed text-white/80 font-medium">
                   {site.about.short}
                 </p>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-wrap gap-4 pointer-events-auto">
                 <Link to="/projects">
                   <Button 
                     type="button" 
