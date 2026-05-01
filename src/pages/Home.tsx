@@ -32,28 +32,31 @@ export default function Home() {
 
   return (
     <motion.div 
-      className="relative min-h-screen overflow-x-hidden"
+      className="relative min-h-screen overflow-x-hidden will-change-transform"
       onMouseMove={handleMouseMove}
       style={{
         rotateX,
         rotateY,
-        perspective: "1200px"
+        perspective: "1200px",
+        backfaceVisibility: "hidden"
       }}
     >
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Immersive 3D Background - "Out of the box" */}
         <motion.div 
-          className="absolute inset-0 z-0 overflow-visible"
+          className="absolute inset-0 z-0 overflow-visible pointer-events-auto"
           style={{
             x: mouseX,
             y: mouseY,
             scale: 1.05
           }}
+          onMouseEnter={() => setIsInteracting(true)}
+          onMouseLeave={() => setIsInteracting(false)}
         >
           <WorkstationCanvas
             reducedMotion={reducedMotion}
-            className={`h-full w-full transition-opacity duration-1000 ${isInteracting ? 'opacity-80' : 'opacity-40'}`}
+            className={`h-full w-full transition-opacity duration-1000 ${isInteracting ? 'opacity-90' : 'opacity-40'}`}
             interactive
             view={view}
             onViewChange={setView}
@@ -70,7 +73,6 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
-              onMouseEnter={() => setIsInteracting(false)}
             >
               <div className="inline-flex items-center gap-3 rounded-sm border-l-2 border-blue-500 bg-blue-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 backdrop-blur-md">
                 <Activity className="h-3 w-3 animate-pulse" />
