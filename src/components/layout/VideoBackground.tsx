@@ -10,17 +10,19 @@ const videos = [
   "https://cdn.pixabay.com/video/2023/10/19/185598-876251213_large.mp4",
   // Cyberpunk / Game Dev / 3D Environments
   "https://cdn.pixabay.com/video/2020/05/25/40105-424840842_large.mp4",
-  // Data Visualization / Global Networks
-  "https://cdn.pixabay.com/video/2022/10/18/135338-761923239_large.mp4"
+  // Data Visualization / Global Networks (Updated link)
+  "https://cdn.pixabay.com/video/2023/10/24/186315-877713838_large.mp4"
 ];
 
 export default function VideoBackground() {
   const [index, setIndex] = useState(0);
 
+  const nextVideo = () => {
+    setIndex((prev) => (prev + 1) % videos.length);
+  };
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % videos.length);
-    }, 15000); // Slower rotation for more immersion
+    const timer = setInterval(nextVideo, 15000); // Slower rotation for more immersion
     return () => clearInterval(timer);
   }, []);
 
@@ -44,6 +46,7 @@ export default function VideoBackground() {
             muted
             loop
             playsInline
+            onError={nextVideo}
             className="h-full w-full object-cover"
           >
             <source src={videos[index]} type="video/mp4" />

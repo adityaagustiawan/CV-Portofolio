@@ -5,10 +5,11 @@ import ProjectCard from "@/components/projects/ProjectCard";
 import Button from "@/components/ui/Button";
 import AnimatedName from "@/components/hero/AnimatedName";
 import TypewriterRole from "@/components/hero/TypewriterRole";
+import BrowserWindow from "@/components/ui/BrowserWindow";
 import { site } from "@/data/site";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { motion, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, Mail, Monitor, Activity, Cpu, Database, Terminal, Shield, Zap, Layout } from "lucide-react";
+import { ArrowRight, Mail, Monitor, Activity, Cpu, Database, Terminal, Shield, Zap, Layout, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -169,54 +170,64 @@ export default function Home() {
             <div className="mt-4 h-1 w-20 bg-blue-500" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { 
-                category: "AI/LLM Operations", 
-                skills: site.skills["AI/LLM"], 
+                category: "Languages", 
+                skills: site.skills["Languages"], 
                 icon: Cpu,
-                desc: "Neural network architecture and LLM orchestration."
+                desc: "Proficiency in modern programming and scripting languages.",
+                url: "adytia.dev/languages"
               },
               { 
-                category: "Backend Engine", 
-                skills: site.skills.Backend, 
-                icon: Terminal,
-                desc: "High-performance server-side logic and data processing."
-              },
-              { 
-                category: "Interface Design", 
-                skills: site.skills.Frontend, 
+                category: "Frontend", 
+                skills: site.skills["Frontend"], 
                 icon: Layout,
-                desc: "Reactive, high-fidelity user interfaces and UX."
+                desc: "Building reactive, high-fidelity interfaces and 3D web experiences.",
+                url: "adytia.dev/frontend-engine"
               },
               { 
-                category: "Deployment Ops", 
-                skills: site.skills.Tools, 
-                icon: Shield,
-                desc: "Containerization, CI/CD, and system reliability."
+                category: "Backend", 
+                skills: site.skills["Backend"], 
+                icon: Database,
+                desc: "Scalable server-side logic and real-time database management.",
+                url: "adytia.dev/backend-services"
+              },
+              { 
+                category: "AI & Tools", 
+                skills: site.skills["AI & Tools"], 
+                icon: Terminal,
+                desc: "Integration of AI models, automation flows, and production tooling.",
+                url: "adytia.dev/ai-tools"
               }
             ].map((group, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative p-8 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md hover:border-blue-500/30 transition-all duration-500"
               >
-                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all">
-                  <group.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-bold uppercase tracking-tight text-white mb-2">{group.category}</h3>
-                <p className="text-xs text-white/40 mb-6 uppercase tracking-wider leading-relaxed">{group.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {group.skills.map((skill, j) => (
-                    <span key={j} className="px-2 py-1 rounded-sm bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:border-blue-500/20 group-hover:text-blue-400 transition-colors">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                <div className="absolute top-0 right-0 p-4 text-[10px] font-mono text-white/10 group-hover:text-blue-500/20">0{i + 1}</div>
+                <BrowserWindow 
+                  url={group.url}
+                  className="h-full"
+                >
+                  <div className="p-6">
+                    <div className="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                      <group.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-md font-black uppercase tracking-widest text-white mb-2">{group.category}</h3>
+                    <p className="text-[9px] text-white/40 mb-6 uppercase tracking-[0.2em] leading-relaxed line-clamp-2">{group.desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.skills?.map((skill, j) => (
+                        <span key={j} className="px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 text-[8px] font-black uppercase tracking-widest text-white/50 group-hover:border-blue-500/30 group-hover:text-blue-400 transition-colors">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="absolute top-0 right-0 p-3 text-[8px] font-mono text-white/5 group-hover:text-blue-500/20">NODE_{i + 1}</div>
+                  </div>
+                </BrowserWindow>
               </motion.div>
             ))}
           </div>

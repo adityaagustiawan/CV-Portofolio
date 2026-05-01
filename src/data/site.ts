@@ -81,27 +81,25 @@ export type SiteConfig = {
 };
 
 export const site: SiteConfig = {
-  name: "ADYTIA (ADIT) AGUSTIAWAN",
-  role: "AI Engineer | Game Dev | MLOps",
+  name: "ADYTIA AGUSTIAWAN",
+  role: "Full-Stack Developer | AI & Automation Enthusiast",
   roles: [
-    "AI Engineer",
-    "Game Dev",
-    "MLOps",
-    "Digital Marketing",
-    "Ios Dev",
-    "IoTs"
+    "Full-Stack Developer",
+    "AI & Automation",
+    "Backend Engineer",
+    "Game Dev Enthusiast"
   ],
-  tagline: "Bachelor of Information Technology | AI Engineer | Game Dev | MLOps",
-  location: "Kutai Kartanegara, Kalimantan Timur, Indonesia",
+  tagline: "Building AI-powered applications, automation tools, and engaging web experiences.",
+  location: "Bandung, Indonesia",
   email: "adityaagustiawan562@gmail.com",
-  resumeCtaLabel: "Print / Save PDF",
+  resumeCtaLabel: "Download CV",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/adytia-agustiawan-3a3345376/", icon: Linkedin },
     { label: "Email", href: "mailto:adityaagustiawan562@gmail.com", icon: Mail },
     { label: "GitHub", href: "https://github.com/adityaagustiawan", icon: Github },
     { label: "Twitter", href: "https://twitter.com/adytia-agustiawan", icon: Twitter },
     { label: "Google Skills", href: "https://www.skills.google/public_profiles/32664b3e-590a-48c2-b5af-9e0355c48a84", icon: GoogleSkillsIcon },
-    { label: "Website", href: "https://adytiaportofolio.onhercules.app", icon: Globe },
+    { label: "Website", href: "https://trae1ftki8k7-h6627kama-adityaagustiawans-projects.vercel.app", icon: Globe },
   ] satisfies SocialLink[],
   nav: [
     { label: "Home", to: "/" },
@@ -115,89 +113,128 @@ export const site: SiteConfig = {
     { label: "Resume", href: "/resume", icon: FileText },
   ] as const,
   skills: {
-    "AI/LLM": ["LLM apps", "RAG", "Evaluation", "Vector search", "Prompting"],
-    Backend: ["Python", "Node.js", "REST APIs", "Postgres"],
-    Frontend: ["React", "TypeScript", "Tailwind"],
-    Tools: ["Docker", "Git", "Vite"],
+    "Languages": ["JavaScript", "TypeScript", "Python", "PHP", "SQL"],
+    "Frontend": ["React", "Next.js", "TanStack", "Tailwind CSS", "Three.js", "Framer Motion"],
+    "Backend": ["Node.js", "Express", "REST APIs", "Supabase", "PostgreSQL"],
+    "AI & Tools": ["OpenAI API", "Chatbots", "Automation", "Git", "Vercel", "Docker"],
   } as const,
   about: {
     short:
-      "Bachelor of Information Technology from Universitas AMIKOM Yogyakarta. I am an AI Engineer, Game Developer, and MLOps enthusiast focused on building innovative solutions.",
+      "Detail-oriented developer focused on building AI-powered applications, automation tools, and engaging web experiences.",
     long:
-      "I specialize in building production-ready AI features, immersive game experiences, and robust MLOps pipelines. With a background in Information Technology from Universitas AMIKOM Yogyakarta, I bridge the gap between complex technical systems and user-centric design. I care about reliability, scalability, and measurable outcomes in every project I undertake.",
+      "I am a Full-Stack Developer based in Bandung, Indonesia. I specialize in building practical software where AI, automation, and clean interfaces meet. My projects span AI chatbots for restaurants, casual game platforms, 3D portfolio experiences, and game backend tooling. I am skilled at turning ideas into shipped products — from chatbot-driven food ordering to game platforms and backend services.",
   },
   resume: {
     summary:
-      "AI Engineer with expertise in LLM applications, RAG systems, and production-ready AI features. Focused on building reliable, scalable, and user-centric solutions.",
+      "Detail-oriented developer focused on building AI-powered applications, automation tools, and engaging web experiences. Skilled at turning ideas into shipped products.",
     experience: [
       {
-        title: "AI Engineer",
-        org: "Freelance",
-        period: "2024 - Present",
+        title: "Independent Developer",
+        org: "Personal Projects & Open Source",
+        period: "2023 — Present",
         bullets: [
-          "Built RAG workspace search with citations and evaluation harness",
-          "Developed agentic support copilot with human-in-the-loop review",
-          "Created LLM evaluation workflows for prompt regression testing",
+          "Built DynamenuAI: AI chatbot for restaurant ordering and kitchen automation",
+          "Developed NexPlay-playhub: A web platform for discoverable casual gaming",
+          "Shipped 3D portfolio site with flip-book UI and Swiper navigation",
+          "Focused on end-to-end product delivery and modern web tooling",
+        ],
+      },
+      {
+        title: "Backend & Game Tooling",
+        org: "Growtopia Backend (Open Source)",
+        period: "2024",
+        bullets: [
+          "Implemented backend services and tooling for game server experimentation",
+          "Explored low-level network programming and modular service design",
+          "Focused on connection handling and packet flow analysis",
         ],
       },
     ] satisfies ResumeEntry[],
     education: [
       {
-        title: "Bachelor of Information Technology",
-        org: "Universitas AMIKOM Yogyakarta",
-        period: "2020 - 2024",
+        title: "Self-Directed Learning",
+        org: "Software Engineering & AI",
+        period: "Ongoing",
         bullets: [
-          "Focused on AI, Machine Learning, and Software Engineering",
-          "Graduated with honors",
+          "Continuous study of full-stack web development and AI integration",
+          "Specializing in modern frameworks like Next.js and React",
+          "Exploring AI automation flows and LLM orchestration",
         ],
       },
     ] satisfies ResumeEntry[],
   },
   projects: [
     {
-      id: "rag-workspace-search",
-      title: "RAG Workspace Search",
-      summary: "Search + chat over internal docs with citations and evals.",
+      id: "dynamenu-ai",
+      title: "DynamenuAI",
+      summary: "AI Chatbot & Automation for dining and food requests.",
       description:
-        "A retrieval-augmented system that answers questions over documentation and notes. Emphasis on response grounding, transparent citations, and predictable behavior under uncertainty.",
-      tags: ["LLM", "RAG", "Vector Search", "TypeScript"],
+        "AI-powered dining and food request application combining a chatbot interface with kitchen-side automation. Customers place orders by chatting; the system parses intent, confirms items, and routes the order downstream.",
+      tags: ["React", "Node.js", "OpenAI API", "Tailwind"],
       year: "2026",
       links: [
-        { label: "Live Demo", href: "#" },
-        { label: "Source", href: "https://github.com/adityaagustiawan/rag-workspace-search" },
+        { label: "Source", href: "https://github.com/adityaagustiawan/DynamenuAI" },
       ],
       imagePrompt:
-        "dark mode AI search product UI, citations panel, chat interface, subtle blue glow accents, crisp typography, modern product screenshot, high contrast, studio lighting",
-      highlights: ["Citations-first UX", "Evaluation harness", "Latency-aware retrieval"],
+        "modern restaurant menu interface, AI chatbot overlay, food ordering automation, dark mode, sleek UI design, high tech restaurant vibes, blue glow accents",
+      highlights: ["AI Chatbot integration", "Intent parsing", "Kitchen-side automation"],
     },
     {
-      id: "llm-eval-harness",
-      title: "LLM Evaluation Harness",
-      summary: "Automated evals for prompts, regressions, and safety checks.",
+      id: "nexplay-playhub",
+      title: "NexPlay-playhub",
+      summary: "Web-based play hub for casual gaming.",
       description:
-        "A lightweight evaluation workflow to measure answer quality, grounding, and policy constraints across prompt/model changes. Designed to support fast iteration with confidence.",
-      tags: ["Evaluation", "LLM", "Testing", "Node.js"],
-      year: "2025",
-      links: [{ label: "Case Study", href: "#" }],
+        "A web-based play hub that brings casual games into a single accessible platform. Designed for discovery and instant browser-based play with a clean, performance-first interface.",
+      tags: ["Next.js", "React", "Tailwind", "Vercel"],
+      year: "2026",
+      links: [
+        { label: "Source", href: "https://github.com/adityaagustiawan/NexPlay-playhub" },
+      ],
       imagePrompt:
-        "dark mode developer tool UI, test matrix, metrics charts, prompt variants, subtle blue highlights, clean layout, modern product screenshot, studio lighting",
-      highlights: ["Prompt regression tests", "Quality metrics", "Fast iteration workflow"],
+        "gaming platform UI, casual game discovery, modern web dashboard, vibrant accents, dark mode, play-first interface",
+      highlights: ["Single-platform discovery", "Performance optimized", "Clean play-first UX"],
     },
     {
-      id: "agentic-support-copilot",
-      title: "Agentic Support Copilot",
-      summary: "Tool-using assistant for triage, summaries, and next steps.",
+      id: "portofolio-cv-3d",
+      title: "Portofolio-CV",
+      summary: "3D flip-book portfolio website.",
       description:
-        "An assistant workflow that drafts responses, summarizes threads, and proposes actions. Emphasis on controllability, human-in-the-loop review, and transparent reasoning.",
-      tags: ["Agents", "LLM", "UX", "TypeScript"],
-      year: "2025",
-      links: [{ label: "Source", href: "https://github.com/adityaagustiawan/agentic-support-copilot" }],
+        "Personal portfolio website built around a 3D flip-book interaction and Swiper-based navigation. Tactile page-turning experience showcasing work history and projects.",
+      tags: ["Three.js", "Swiper", "React", "Vercel"],
+      year: "2026",
+      links: [
+        { label: "Source", href: "https://github.com/adityaagustiawan/Portofolio-CV" },
+      ],
       imagePrompt:
-        "dark mode AI assistant UI, conversation thread, action sidebar, subtle blue glow, modern product interface, crisp typography, studio lighting",
-      highlights: ["Human-in-the-loop review", "Tool-based actions", "Consistent output formatting"],
+        "3D flipbook interface, interactive portfolio, digital book animation, Three.js visualization, modern and tactile web design",
+      highlights: ["3D Flip-book interaction", "Swiper navigation", "Tactile experience"],
+    },
+    {
+      id: "growtopia-backend",
+      title: "growtopia-backend",
+      summary: "Custom backend services for game servers.",
+      description:
+        "Custom backend services and tooling exploring Growtopia-style game server architecture. Focuses on low-level network programming, connection handling, and modular design.",
+      tags: ["Node.js", "TCP/Networking", "JavaScript"],
+      year: "2024",
+      links: [
+        { label: "Source", href: "https://github.com/adityaagustiawan/growtopia-backend" },
+      ],
+      imagePrompt:
+        "low-level network programming, digital packets flow, server architecture visualization, modular service design, high performance backend",
+      highlights: ["Low-level networking", "Modular service design", "Packet flow analysis"],
     },
   ] satisfies Project[],
   certificates: [
+    {
+      id: "boim-2025",
+      category: "Achievement",
+      title: "Participation in BOIM 2025 - 2D Live Action Comic",
+      issuer: "Universitas AMIKOM Yogyakarta",
+      date: "Jan 2025",
+      description: "Award for participation in the BOIM competition at Amikom Yogyakarta for creating a 2D Live Action Comic.",
+      skills: ["2D Art", "Comic Design", "Live Action"],
+    },
     {
       id: "google-cloud-skill-boost",
       category: "Achievement",
