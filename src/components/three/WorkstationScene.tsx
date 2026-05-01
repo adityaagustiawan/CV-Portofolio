@@ -428,11 +428,7 @@ export default function WorkstationScene({
     if (r) {
       if (variant === "hero" && interactive) {
         // Automatic rotation for the workstation
-        // Only auto-rotate if not being manually rotated via OrbitControls
-        const isUserRotating = controls.current?.active ?? false;
-        if (!isUserRotating) {
-          r.rotation.y += dt * 0.15; // Speed of automatic rotation
-        }
+        r.rotation.y += dt * 0.15; // Speed of automatic rotation
         r.rotation.x = Math.sin(t * 0.35) * 0.05;
         r.position.y = Math.sin(t * 0.6) * 0.03;
       } else {

@@ -11,6 +11,7 @@ import { motion, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, Mail, Monitor, Activity, Cpu, Database, Terminal, Shield, Zap, Layout } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const reducedMotion = usePrefersReducedMotion();
