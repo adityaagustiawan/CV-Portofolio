@@ -56,8 +56,11 @@ export default function Home() {
         >
           <WorkstationCanvas
             reducedMotion={reducedMotion}
-            className={`h-full w-full transition-opacity duration-1000 ${isInteracting ? 'opacity-90' : 'opacity-40'}`}
-            interactive
+            className={cn(
+              "h-full w-full transition-opacity duration-1000",
+              isInteracting ? 'opacity-100' : 'opacity-40'
+            )}
+            interactive={true}
             view={view}
             onViewChange={setView}
             selectedTool={tool}

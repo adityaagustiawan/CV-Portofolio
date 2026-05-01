@@ -428,7 +428,11 @@ export default function WorkstationScene({
     if (r) {
       if (variant === "hero" && interactive) {
         // Automatic rotation for the workstation
-        r.rotation.y += dt * 0.15; // Speed of automatic rotation
+        // Only auto-rotate if not being manually rotated via OrbitControls
+        const isUserRotating = controls.current?.active ?? false;
+        if (!isUserRotating) {
+          r.rotation.y += dt * 0.15; // Speed of automatic rotation
+        }
         r.rotation.x = Math.sin(t * 0.35) * 0.05;
         r.position.y = Math.sin(t * 0.6) * 0.03;
       } else {
@@ -460,11 +464,11 @@ export default function WorkstationScene({
       {variant === "hero" && interactive ? (
         <OrbitControls
           ref={controls}
-          enabled
+          makeDefault
           enablePan={false}
-          enableZoom
-          enableRotate
-          enableDamping
+          enableZoom={true}
+          enableRotate={true}
+          enableDamping={true}
           dampingFactor={0.08}
           rotateSpeed={0.7}
           minPolarAngle={view === "screen" ? 1.05 : 0.75}
