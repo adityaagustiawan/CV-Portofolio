@@ -104,7 +104,7 @@ export const site: SiteConfig = {
     { label: "GitHub", href: "https://github.com/adityaagustiawan", icon: Github },
     { label: "Twitter", href: "https://twitter.com/adytia-agustiawan", icon: Twitter },
     { label: "Google Skills", href: "https://www.skills.google/public_profiles/32664b3e-590a-48c2-b5af-9e0355c48a84", icon: GoogleSkillsIcon },
-    { label: "Website", href: "https://trae1ftki8k7-h6627kama-adityaagustiawans-projects.vercel.app", icon: Globe },
+    { label: "Website", href: "/", icon: Globe },
   ] satisfies SocialLink[],
   nav: [
     { label: "Home", to: "/" },
