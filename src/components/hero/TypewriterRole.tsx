@@ -41,12 +41,12 @@ export default function TypewriterRole({ roles }: TypewriterRoleProps) {
   }, [displayText, isDeleting, index, roles, typingSpeed]);
 
   return (
-    <span className="block text-zinc-600 dark:text-white/70 min-h-[1.5em] relative">
+    <span className="block text-zinc-600 dark:text-white/70 min-h-[1.5em] relative transform-gpu">
       {displayText}
       <motion.span
         animate={{ opacity: [0, 1, 0] }}
         transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-        className="inline-block w-[2px] h-[1em] bg-blue-500 ml-1 align-middle"
+        className="inline-block w-[2px] h-[1em] bg-blue-500 ml-1 align-middle transform-gpu"
       />
     </span>
   );

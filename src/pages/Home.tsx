@@ -33,45 +33,42 @@ export default function Home() {
   };
 
   return (
-    <motion.div 
-      className="relative min-h-screen overflow-x-hidden will-change-transform"
-      onMouseMove={handleMouseMove}
-      style={{
-        rotateX,
-        rotateY,
-        perspective: "1200px",
-        backfaceVisibility: "hidden"
-      }}
+    <div 
+      className="relative min-h-screen overflow-x-hidden bg-zinc-950"
     >
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Immersive 3D Background - "Out of the box" */}
-        <motion.div 
+      <section className="relative min-h-section flex items-center overflow-hidden">
+        {/* Immersive 3D Background - Improved stability */}
+        <div 
           className="absolute inset-0 z-0 overflow-visible pointer-events-auto"
-          style={{
-            x: mouseX,
-            y: mouseY,
-            scale: 1.05
-          }}
-          onMouseEnter={() => setIsInteracting(true)}
-          onMouseLeave={() => setIsInteracting(false)}
         >
-          <WorkstationCanvas
-            reducedMotion={reducedMotion}
-            className={cn(
-              "h-full w-full transition-opacity duration-1000",
-              isInteracting ? 'opacity-100' : 'opacity-40'
-            )}
-            interactive={true}
-            view={view}
-            onViewChange={setView}
-            selectedTool={tool}
-            onSelectedToolChange={setTool}
-          />
+          <motion.div
+            className="h-full w-full transform-gpu"
+            style={{
+              x: mouseX,
+              y: mouseY,
+              scale: 1.02
+            }}
+            onMouseEnter={() => setIsInteracting(true)}
+            onMouseLeave={() => setIsInteracting(false)}
+          >
+            <WorkstationCanvas
+              reducedMotion={reducedMotion}
+              className={cn(
+                "h-full w-full transition-opacity duration-1000",
+                isInteracting ? 'opacity-100' : 'opacity-40'
+              )}
+              interactive={true}
+              view={view}
+              onViewChange={setView}
+              selectedTool={tool}
+              onSelectedToolChange={setTool}
+            />
+          </motion.div>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-zinc-950/40 via-transparent to-zinc-950/80" />
-        </motion.div>
+        </div>
 
-        <Container className="relative z-10 py-20 pointer-events-none">
+        <Container className="relative z-10 py-20 pointer-events-none isolate">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -79,12 +76,12 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="pointer-events-none"
             >
-              <div className="inline-flex items-center gap-3 rounded-sm border-l-2 border-blue-500 bg-blue-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 backdrop-blur-md pointer-events-auto w-fit">
+              <div className="inline-flex items-center gap-3 rounded-sm border-l-2 border-blue-500 bg-blue-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-blue-400 backdrop-blur-md pointer-events-auto w-fit transform-gpu">
                 <Activity className="h-3 w-3 animate-pulse" />
                 Operational Status: Active
               </div>
 
-              <h1 className="mt-8 text-5xl font-black tracking-tighter sm:text-7xl lg:text-8xl pointer-events-auto">
+              <h1 className="mt-8 text-5xl font-black tracking-tighter sm:text-7xl lg:text-8xl pointer-events-auto transform-gpu">
                 <div className="text-white opacity-20 text-sm tracking-[0.5em] font-bold uppercase mb-2">Subject Name</div>
                 <div className="text-glow">
                   <AnimatedName value={site.name} reducedMotion={reducedMotion} />
@@ -94,7 +91,7 @@ export default function Home() {
                 </div>
               </h1>
 
-              <div className="mt-8 p-6 rounded-lg bg-zinc-900/40 border border-white/5 backdrop-blur-xl max-w-xl pointer-events-auto">
+              <div className="mt-8 p-6 rounded-lg bg-zinc-900/40 border border-white/5 backdrop-blur-xl max-w-xl pointer-events-auto transform-gpu transition-all duration-300 hover:border-white/10">
                 <p className="text-lg leading-relaxed text-white/80 font-medium">
                   {site.about.short}
                 </p>
@@ -117,7 +114,7 @@ export default function Home() {
                   <Button 
                     type="button" 
                     variant="secondary"
-                    className="border-white/10 bg-white/5 px-8 py-6 text-sm font-bold uppercase tracking-widest hover:bg-white/10 hover:border-white/20"
+                    className="border-white/10 bg-white/5 px-8 py-6 text-sm font-bold uppercase tracking-widest hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Establish Contact
@@ -131,7 +128,7 @@ export default function Home() {
                   { label: "System Stack", value: "Neural Networks", icon: Database },
                   { label: "Deployment", value: "Edge Computing", icon: Monitor }
                 ].map((stat, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-sm border border-white/5 bg-white/5 p-4 backdrop-blur-md transition-colors hover:border-blue-500/30">
+                  <div key={i} className="group relative overflow-hidden rounded-sm border border-white/5 bg-white/5 p-4 backdrop-blur-md transition-colors hover:border-blue-500/30 transform-gpu">
                     <div className="flex items-center justify-between">
                       <div className="text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover:text-blue-400 transition-colors">{stat.label}</div>
                       <stat.icon className="h-3 w-3 text-white/20 group-hover:text-blue-400/50 transition-colors" />
